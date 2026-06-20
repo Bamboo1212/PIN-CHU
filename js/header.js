@@ -66,12 +66,20 @@
 
 /* ==========================================================
 ==sticky header
-頁面滾動時，body 加上 class="sticky-header"
 ========================================================== */
 (function () {
   const SCROLL_THRESHOLD = 0; // 滾動超過幾 px 後加上 class，可依需求調整
+  const MOBILE_BREAKPOINT = '(max-width: 991.98px)';
+
+  function shouldStickyHeaderWork() {
+    return !window.matchMedia(MOBILE_BREAKPOINT).matches;
+  }
 
   function updateStickyHeader() {
+    if (!shouldStickyHeaderWork()) {
+      document.body.classList.remove('sticky-header');
+      return;
+    }
     if (window.scrollY > SCROLL_THRESHOLD) {
       document.body.classList.add('sticky-header');
     } else {
@@ -83,4 +91,5 @@
   updateStickyHeader();
 
   window.addEventListener('scroll', updateStickyHeader, { passive: true });
+  window.matchMedia(MOBILE_BREAKPOINT).addEventListener('change', updateStickyHeader);
 })();

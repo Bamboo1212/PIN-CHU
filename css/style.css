@@ -695,6 +695,11 @@ footer .copyrights {
     background-color: var(--white);
   }
 
+  .sticky-top {
+    position: fixed;
+    width: 100%;
+  }
+
   .navbar {
     padding: 8px 0;
   }
