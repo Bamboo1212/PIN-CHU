@@ -2,6 +2,8 @@
 
 ==nav bottom line
 ==hero marquee
+==go to top
+==float sns hide on scroll
 
 ========================================================== */
 
@@ -84,4 +86,59 @@
     halfWidth = wrap.scrollWidth / 2;
     requestAnimationFrame(tick);
   });
+})();
+
+
+/* ==========================================================
+==go to top
+========================================================== */
+window.addEventListener('DOMContentLoaded', function() {
+  var totopBtn = document.getElementById('totop-btn');
+  if (totopBtn) {
+    totopBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+  }
+});
+
+
+/* ==========================================================
+==float sns hide on scroll
+========================================================== */
+(function () {
+  const floatSns = document.querySelector('.float-sns-wrap');
+  if (!floatSns) return;
+
+  const SCROLL_THRESHOLD = 10; // 滾動超過多少 px 才判斷方向，避免過度敏感
+  let lastScrollY = window.scrollY;
+  let ticking = false;
+
+  function updateFloatSns() {
+    const currentScrollY = window.scrollY;
+    const diff = currentScrollY - lastScrollY;
+
+    if (Math.abs(diff) > SCROLL_THRESHOLD) {
+      if (diff > 0 && currentScrollY > 0) {
+        // 向下滑：隱藏
+        floatSns.classList.add('hide');
+      } else {
+        // 向上滑：顯示
+        floatSns.classList.remove('hide');
+      }
+      lastScrollY = currentScrollY;
+    }
+
+    ticking = false;
+  }
+
+  window.addEventListener('scroll', function () {
+    if (!ticking) {
+      requestAnimationFrame(updateFloatSns);
+      ticking = true;
+    }
+  }, { passive: true });
 })();
