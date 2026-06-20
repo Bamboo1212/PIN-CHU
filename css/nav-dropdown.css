@@ -95,6 +95,7 @@
 
   .navbar .dropdown.show .dropdown-menu {
     display: block;
+    padding: 0 0 0 16px;
   }
 
   .navbar .dropdown .dropdown-item {
@@ -110,5 +111,18 @@
 
   .navbar .dropdown.show .nav-dropdown-toggle .bi {
     transform: rotate(180deg);
+  }
+
+  
+  .nav-item {
+    width: 100%;
+  }
+
+  .navbar-expand-lg .navbar-nav .nav-link {
+    width: 100%;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--bs-border-color);
+    display: flex;
+    justify-content: space-between;
   }
 }

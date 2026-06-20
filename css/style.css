@@ -263,11 +263,11 @@
 /* ========== website ========== */
 .portfolio-item {
   display: block;
-  color: var(--white);
 }
 
 .portfolio-item .item-title {
   font-size: 20px;
+  color: var(--white);
 }
 
 .portfolio-item:after {
@@ -649,6 +649,11 @@ footer .copyrights {
     font-size: 54px;
   }
 
+  /* ========== portfolio ========== */
+  .portfolio-item .portfolio-overlay {
+    padding: 24px;
+  }
+
   /* ========== footer ========== */
   .float-sns-item {
     width: 48px;
@@ -802,6 +807,7 @@ footer .copyrights {
   }
 
   .portfolio-item .item-title {
+    color: var(--black);
     font-size: var(--fs-itemTitle);
   }
 
