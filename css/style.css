@@ -385,7 +385,8 @@
 }
 
 .service-txt-wrap .accordion-button::after {
-  transform: translateY(10px);
+  position: relative;
+  top: 10px;
 }
 
 .service-txt-wrap .accordion-item {
