@@ -84,6 +84,12 @@
   line-height: 1.5;
 }
 
+.sidebar-title {
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
 /* ========== title ========== */
 .txt-gray {
   color: var(--txt-gray);
@@ -477,6 +483,64 @@ header.sticky-top {
 
 .swiper-backface-hidden .swiper-slide:not(.swiper-slide-active) {
   transform: translateZ(0) scale(0.8);
+}
+
+/* ========== info ========== */
+.sidebar-wrap {
+  border-bottom: 1px solid var(--bs-border-color);
+}
+
+.sidebar-wrap li a {
+  display: inline-block;
+  width: fit-content;
+}
+
+.sidebar-wrap .active a {
+  color: var(--theme);
+  border-bottom: 1px solid var(--theme);
+}
+
+.info-portfolio-item .img-wrap img {
+  transition: .5s ease;
+}
+
+.info-portfolio-item:hover .img-wrap img {
+  transform: scale(1.05);
+}
+
+.info-portfolio-item .item-title {
+  font-size: 20px;
+}
+
+.info-portfolio-item .more-btn {
+  color: var(--txt-gray);
+  transition: .3s ease;
+}
+
+.info-portfolio-item:hover .more-btn {
+  color: var(--theme);
+}
+
+.pagination-wrap {
+  margin-top: 48px;
+}
+
+.pagination-wrap li a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+}
+
+.pagination-wrap .active a {
+  border-bottom: 1px solid var(--theme);
+  color: var(--theme);
+}
+
+.pagination-wrap li:first-child a,
+.pagination-wrap li:last-child a {
+  font-size: 14px;
 }
 
 
@@ -979,22 +1043,40 @@ footer .copyrights {
   .portfolio-item:after {
     display: none;
   }
+  
+  .portfolio-item img {
+    border: 1px solid var(--bs-border-color);
+  }
 
   .portfolio-item .portfolio-overlay {
     position: static;
     transform: none;
     opacity: 1;
-    padding: 12px 0 0;
+    padding: 0;
+    border: 1px solid var(--bs-border-color);
   }
 
   .portfolio-item .item-title {
     color: var(--black);
     font-size: var(--fs-itemTitle);
+    padding: 16px 16px 0;
   }
 
   .portfolio-item .portfolio-overlay .txt,
   .portfolio-item .portfolio-overlay .more-btn {
     color: var(--txt-gray);
+  }
+
+  .portfolio-item .portfolio-overlay .txt {
+    padding: 0 16px 0;
+  }
+
+  .portfolio-item .portfolio-overlay .more-btn {
+    padding: 8px 16px;
+    width: 100%;
+    justify-content: flex-end;
+    border-top: 1px solid var(--bs-border-color);
+    line-height: 1.75;
   }
 
   [class*=swiper-button-] {
@@ -1024,6 +1106,14 @@ footer .copyrights {
     top: 0;
     right: 0;
     background: linear-gradient(-90deg,rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 60%, rgba(255, 255, 255, 0) 60%, rgba(255, 255, 255, 0) 100%);
+  }
+
+  .info-portfolio-item .item-title {
+    font-size: var(--fs-itemTitle);
+  }
+
+  .pagination-wrap {
+    margin-top: 36px;
   }
 
    /* ========== services ========== */
@@ -1082,6 +1172,11 @@ footer .copyrights {
   .btn-base {
     width: 130px;
     padding: 8px;
+  }
+
+  /* ========== header ========== */
+  .navbar-brand img {
+    width: 90px;
   }
 
   /* ========== hero ========== */
@@ -1154,6 +1249,10 @@ footer .copyrights {
     padding: 22px 12px 12px 42px;
   }
 
+  .sidebar-wrap {
+    border-bottom: 0;
+  }
+
   /* ========== contact ========== */
   .contact-item i {
     font-size: 36px;
@@ -1170,13 +1269,15 @@ footer .copyrights {
 
   /* ========== breadcrumb ========== */
   .breadcrumb-wrap .breadcrumb-en {
-    font-size: 60px;
+    font-size: 58px;
   }
 }
 
 @media (max-width: 575px) {
   :root {
     --section: 40px;
+    --fs-heroTitle: 20px;
+    --fs-heroTxt: 14px;
   }
   
   /* ========== intro ========== */
@@ -1208,6 +1309,38 @@ footer .copyrights {
 
   .service-txt-wrap .accordion .txt {
     padding: 22px 12px 8px 40px;
+  }
+
+  /* ========== portfolio ========== */
+  .portfolio-item .item-title,
+  .info-portfolio-item .item-title {
+    font-size: 16px;
+  }
+
+  .portfolio-item p,
+  .info-portfolio-item p {
+    font-size: var(--fs-small);
+  }
+
+  .info-portfolio-item .txt-wrap > div {
+    padding: 12px;
+  }
+
+  .portfolio-item .item-title {
+    padding: 12px 12px 0;
+  }
+
+  .portfolio-item .portfolio-overlay .txt {
+    padding: 0 12px 0;
+  }
+
+  .portfolio-item .portfolio-overlay .more-btn {
+    padding: 4px 12px;
+  }
+
+  .portfolio-item small,
+  .info-portfolio-item .txt-wrap small {
+    font-size: 12px;
   }
 
   /* ========== footer ========== */

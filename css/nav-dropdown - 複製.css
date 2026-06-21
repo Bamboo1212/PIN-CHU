@@ -35,22 +35,10 @@
 }
 
 /* ========== sub nav ========== */
-/* wraps the nav-link text and the dropdown arrow button so they can be
-   clicked independently (text = navigate, arrow = expand/collapse) */
-.nav-link-row {
-  display: contents;
-}
-
 .nav-dropdown-toggle {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
   gap: 4px;
-  background: none;
-  border: none;
-  padding: 16px;
-  color: var(--black);
-  cursor: pointer;
 }
 
 .nav-dropdown-toggle .bi {
@@ -129,34 +117,11 @@
     width: 100%;
   }
 
-  /* plain links (no dropdown) keep the original full-width row style */
-  .navbar-expand-lg .navbar-nav .nav-item > .nav-link {
+  .navbar-expand-lg .navbar-nav .nav-link {
     width: 100%;
     padding: 12px 0;
     border-bottom: 1px solid var(--bs-border-color);
     display: flex;
     justify-content: space-between;
-  }
-
-  /* dropdown items: text link and arrow button sit side by side,
-     each independently clickable/tappable */
-  .navbar-expand-lg .navbar-nav .nav-link-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    border-bottom: 1px solid var(--bs-border-color);
-  }
-
-  .navbar-expand-lg .navbar-nav .nav-link-row .nav-link {
-    flex: 1;
-    width: auto;
-    padding: 12px 0;
-    border-bottom: none;
-  }
-
-  .navbar-expand-lg .navbar-nav .nav-link-row .nav-dropdown-toggle {
-    flex-shrink: 0;
-    padding: 12px 4px 12px 16px;
   }
 }
