@@ -31,9 +31,8 @@
   <meta name="=apple-mobile-web-app-capable" content="yes">
   <meta name="format-detection" content="telephone=no">
 
-  <!-- swiper -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css" />
 	<!-- css -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css" />
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/bootstrap-icons.min.css">
 	<link rel="stylesheet" href="css/nav-dropdown.css">
@@ -59,7 +58,7 @@
       <div class="container justify-content-end justify-content-lg-between">
 
         <!-- logo -->
-        <a class="navbar-brand me-auto me-lg-3" href="#" class="d-block">
+        <a class="navbar-brand me-auto me-lg-3" href="index.html" class="d-block">
           <img src="img/logo.png" alt="PIN CHU">
         </a>
 
@@ -78,7 +77,7 @@
         <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
           <ul class="navbar-nav align-items-center position-relative pt-3 pt-lg-0">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="intro.html">關於我</a>
+              <a class="nav-link" aria-current="page" href="intro.html">關於我</a>
             </li>
             <li class="nav-item dropdown">
               <a class="nav-link nav-dropdown-toggle" href="portfolio_list.html" role="button" aria-expanded="false">
@@ -176,10 +175,10 @@
     <div class="section index-intro-section">
       <div class="cotainer-fluid px-0 position-relative">
         <div class="intro-img-wrap">
-          <img src="img/intro_1200x767.jpg" alt="PIN CHU">
+          <img src="img/intro_1200x800.jpg" alt="PIN CHU" class="w-100">
         </div>
         <div class="container intro-txt-wrap text-end mt-4 mt-lg-0">
-          <div class="d-inline-flex flex-column text-start">
+          <div class="d-inline-flex flex-column align-items-center align-items-sm-start text-start">
             <div>
               <h2 class="section-title side mb-3 mb-lg-4">
                 <span class="en">About Me</span>
@@ -191,7 +190,7 @@
               <p>我是品竹，一位兼具視覺美感與前端技術的網頁設計師。<br>專為「微型品牌、中小企業」提供從 Figma 設計到 RWD 切版的一條龍服務，<br class="d-none d-xxl-block">同時也是「前後端工程師」最可靠的開發戰友。</p>
               <p>網頁具備基礎 SEO 架構優化，結案交付完整的網頁原始碼檔案包，<br class="d-none d-xl-block">讓您的網站具備極佳的 Google 搜尋潛力，同時省下兩邊溝通的無形時間與預算。</p>
             </div>
-            <div class="intro-count-wrap d-flex flex-column flex-sm-row gap-3 gap-sm-0 align-items-center justify-content-between">
+            <div class="intro-count-wrap d-flex flex-column flex-sm-row gap-2 gap-sm-0 align-items-center justify-content-between w-100">
               <div class="count-item d-inline-flex flex-column justify-content-center">
                 <div class="d-inline-flex justify-content-center align-items-end gap-2 gap-xl-3">
                   <span class="num color">4</span>
@@ -216,6 +215,10 @@
                 <div class="txt">跨產業實際案例</div>
               </div>
             </div>
+            <a href="intro.html" class="btn-base">
+              <span>了解更多</span>
+              <i class="bi-arrow-right fs-normal"></i>
+            </a>
           </div>
         </div>
       </div>
@@ -653,43 +656,11 @@
     </a>
   </div>
 
-
-	<!-- Bootstrap -->
+  <!-- js -->
 	<script src="js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>
 	<script src="js/header.js"></script>
 	<script src="js/custom.js"></script>
-  <!-- swiper -->
-  <script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>
-  <script>
-    var swiper = new Swiper(".portfoiloSwiper", {
-      slidesPerView: 1,
-      spaceBetween: 0,
-      centeredSlides: true,
-      loop: true,
-      // autoplay: {
-      //   delay: 2500,
-      //   disableOnInteraction: false,
-      // },
-      navigation: {
-        nextEl: ".swiper-button-next",
-        prevEl: ".swiper-button-prev",
-      },
-      pagination: {
-        el: ".swiper-pagination",
-        clickable: true,
-      },
-      breakpoints: {
-        575: {
-          slidesPerView: 2,
-          spaceBetween: 10,
-        },
-        991: {
-          slidesPerView: 3,
-          spaceBetween: 15,
-        },
-      },
-    });
-  </script>
 </body>
 
 </html>

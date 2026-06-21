@@ -1,6 +1,7 @@
 /* ==========================================================
 
 ==nav dropdown
+==sticky header
 
 ========================================================== */
 
@@ -68,28 +69,48 @@
 ==sticky header
 ========================================================== */
 (function () {
-  const SCROLL_THRESHOLD = 0; // 滾動超過幾 px 後加上 class，可依需求調整
+  // 加上/移除 class 改用不同的門檻（遲滯區間 hysteresis）
+  // 因為加上 .sticky-header 後 header 高度會變矮，若用同一個門檻，
+  // 高度變化會讓瀏覽器的 scroll anchoring 把 scrollY 拉回門檻以下，
+  // 造成 class 在門檻附近不斷新增/移除、頁面抖動。
+  const ENTER_THRESHOLD = 60; // 滾動超過此值才「加上」sticky-header
+  const EXIT_THRESHOLD = 40;  // 滾動低於此值才「移除」sticky-header
   const MOBILE_BREAKPOINT = '(max-width: 991.98px)';
+
+  let ticking = false;
 
   function shouldStickyHeaderWork() {
     return !window.matchMedia(MOBILE_BREAKPOINT).matches;
   }
 
   function updateStickyHeader() {
+    ticking = false;
+
     if (!shouldStickyHeaderWork()) {
       document.body.classList.remove('sticky-header');
       return;
     }
-    if (window.scrollY > SCROLL_THRESHOLD) {
+
+    const isSticky = document.body.classList.contains('sticky-header');
+    const scrollY = window.scrollY;
+
+    if (!isSticky && scrollY > ENTER_THRESHOLD) {
       document.body.classList.add('sticky-header');
-    } else {
+    } else if (isSticky && scrollY < EXIT_THRESHOLD) {
       document.body.classList.remove('sticky-header');
+    }
+  }
+
+  function onScroll() {
+    if (!ticking) {
+      ticking = true;
+      requestAnimationFrame(updateStickyHeader);
     }
   }
 
   // 初始判斷一次（例如重新整理時頁面已在滾動位置）
   updateStickyHeader();
 
-  window.addEventListener('scroll', updateStickyHeader, { passive: true });
+  window.addEventListener('scroll', onScroll, { passive: true });
   window.matchMedia(MOBILE_BREAKPOINT).addEventListener('change', updateStickyHeader);
 })();

@@ -4,6 +4,8 @@
 ==hero marquee
 ==go to top
 ==float sns hide on scroll
+==index portfolio swiper
+==do-section deco-word pseudo-sticky
 
 ========================================================== */
 
@@ -141,4 +143,109 @@ window.addEventListener('DOMContentLoaded', function() {
       ticking = true;
     }
   }, { passive: true });
+})();
+
+
+/* ==========================================================
+==index portfolio swiper
+========================================================== */
+(function() {
+  var swiperContainers = document.querySelectorAll('.portfoiloSwiper');
+  if (swiperContainers.length > 0 && typeof Swiper !== "undefined") {
+    swiperContainers.forEach(function(container){
+      new Swiper(container, {
+        slidesPerView: 1,
+        spaceBetween: 0,
+        centeredSlides: true,
+        loop: true,
+        autoplay: {
+          delay: 2500,
+          disableOnInteraction: false,
+        },
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
+        },
+        breakpoints: {
+          575: {
+            slidesPerView: 2,
+            spaceBetween: 10,
+          },
+          991: {
+            slidesPerView: 3,
+            spaceBetween: 15,
+          },
+        },
+      });
+    });
+  }
+})();
+
+
+/* ==========================================================
+==do-section deco-word pseudo-sticky
+========================================================== */
+(function () {
+  const section = document.querySelector('.do-section');
+  const decoWord = section ? section.querySelector('.deco-word') : null;
+  if (!section || !decoWord) return;
+
+  const STICK_TOP = 80; // 距離 viewport 頂部多少 px 開始停留
+
+  let offsetLeft = 0; // deco-word 預設狀態下，相對 .do-section 左側的距離
+  let decoHeight = 0; // deco-word 自身高度（直書文字的縱向長度）
+
+  // 清除 inline style，讓元素還原成 CSS 預設的定位狀態
+  function resetStyle() {
+    decoWord.style.position = '';
+    decoWord.style.top = '';
+    decoWord.style.bottom = '';
+    decoWord.style.left = '';
+  }
+
+  // 量測預設狀態下的位置與高度，resize 時需要重新量測
+  function measure() {
+    resetStyle();
+    const sectionRect = section.getBoundingClientRect();
+    const decoRect = decoWord.getBoundingClientRect();
+    offsetLeft = decoRect.left - sectionRect.left;
+    decoHeight = decoRect.height;
+  }
+
+  function update() {
+    const sectionRect = section.getBoundingClientRect();
+
+    // 階段一：section 頂部還沒到達停留位置，維持 CSS 預設定位
+    if (sectionRect.top > STICK_TOP) {
+      resetStyle();
+      return;
+    }
+
+    // 階段三：section 底部已經追上 deco-word，固定貼齊 section 底部
+    if (sectionRect.bottom - decoHeight <= STICK_TOP) {
+      decoWord.style.position = 'absolute';
+      decoWord.style.top = 'auto';
+      decoWord.style.bottom = '0px';
+      decoWord.style.left = offsetLeft + 'px';
+      return;
+    }
+
+    // 階段二：停留階段，用 fixed 模擬 sticky 停在 viewport 的 STICK_TOP 位置
+    decoWord.style.position = 'fixed';
+    decoWord.style.top = STICK_TOP + 'px';
+    decoWord.style.bottom = 'auto';
+    decoWord.style.left = sectionRect.left + offsetLeft + 'px';
+  }
+
+  function refresh() {
+    measure();
+    update();
+  }
+
+  window.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('resize', refresh);
+  window.addEventListener('load', refresh);
+  document.addEventListener('DOMContentLoaded', refresh);
+
+  refresh();
 })();
