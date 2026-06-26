@@ -90,6 +90,12 @@
   line-height: 1.5;
 }
 
+.info-title {
+  font-size: var(--fs-infoTitle);
+  font-weight: 500;
+  line-height: 1.5;
+}
+
 /* ========== title ========== */
 .txt-gray {
   color: var(--txt-gray);
@@ -543,6 +549,46 @@ header.sticky-top {
   font-size: 14px;
 }
 
+.portfolio-info-section:before {
+  content: '';
+  position: absolute;
+  width: 40%;
+  height: 60%;
+  background-color: var(--bs-tertiary-bg);
+  top: 48px;
+  left: 0;
+  z-index: -1;
+}
+
+.portfolio-info-section .golink-btn {
+  padding: 8px;
+  background-color: var(--theme);
+  color: var(--white);
+  width: 42px;
+  height: 42px;
+}
+
+.portfolio-info-section .golink-btn:hover {
+  background-color: var(--themehover);
+}
+
+.portfolio-info-section .golink-btn i {
+  font-size: 22px;
+}
+
+.portfolio-info-section .sub-title {
+  font-size: 20px;
+}
+
+.portfolio-info-section .sub-title:after {
+  content: '';
+  display: block;
+  width: 46px;
+  height: 2px;
+  background-color: var(--theme);
+  margin: 12px 0;
+}
+
 
 /* ==========================================================
 ==services
@@ -886,6 +932,7 @@ footer .copyrights {
   :root {
     --fs-sectionTitle: 26px;
     --fs-heroTitle: 26px;
+    --fs-infoTitle: 24px;
     --fs-heroTxt: 16px;
     --fs-normal: 15px;
 
@@ -1116,6 +1163,19 @@ footer .copyrights {
     margin-top: 36px;
   }
 
+  .portfolio-info-section .golink-btn {
+    width: 36px;
+    height: 36px;
+  }
+
+  .portfolio-info-section .golink-btn i {
+    font-size: 20px;
+  }
+
+  .portfolio-info-section .sub-title {
+    font-size: var(--fs-itemTitle);
+  }
+
    /* ========== services ========== */
   .service-img-wrap {
     position: static;
@@ -1239,6 +1299,14 @@ footer .copyrights {
   [class*=swiper-button-] {
     top: 29% !important;
   }
+
+  .portfolio-info-section:before {
+    top: 90px;
+  }
+
+  .portfolio-info-section .txt-wrap .mt-5 {
+    margin-top: 36px !important;
+  }
   
   /* ========== Services ========== */
   .service-txt-wrap .accordion .num {
@@ -1292,6 +1360,10 @@ footer .copyrights {
   /* ========== portfolio ========== */
   [class*=swiper-button-] {
     top: 36% !important;
+  }
+
+  .portfolio-info-section:before {
+    display: none;
   }
 
   /* ========== services ========== */
