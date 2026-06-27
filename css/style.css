@@ -145,6 +145,8 @@ header.sticky-top {
   /* header 高度會因 .sticky-header 切換而改變，
      關閉 scroll anchoring 避免瀏覽器自動補償 scrollY 造成抖動 */
   overflow-anchor: none;
+  /* 讓 header 進合成層，高度切換時不觸發全頁 reflow */
+  will-change: transform;
 }
 
 .sticky-header header {

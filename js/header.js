@@ -69,12 +69,16 @@
 ==sticky header
 ========================================================== */
 (function () {
-  // 加上/移除 class 改用不同的門檻（遲滯區間 hysteresis）
-  // 因為加上 .sticky-header 後 header 高度會變矮，若用同一個門檻，
-  // 高度變化會讓瀏覽器的 scroll anchoring 把 scrollY 拉回門檻以下，
-  // 造成 class 在門檻附近不斷新增/移除、頁面抖動。
+  // 加上 sticky-header 後 header 高度會變矮，移除時高度恢復變大。
+  // 這個高度差會讓瀏覽器的 scroll anchoring 把 scrollY 往上推，
+  // 若移除門檻不夠低，就會在門檻附近反覆觸發，造成抖動與「滾不到頂」。
+  //
+  // 解法：
+  //  - 加上 sticky：scrollY 超過 ENTER_THRESHOLD 時觸發（一般距離）
+  //  - 移除 sticky：只在 scrollY 回到 0 時才移除，確保已真正到頂，
+  //    不會再被 scroll anchoring 的補償動作二次觸發。
   const ENTER_THRESHOLD = 60; // 滾動超過此值才「加上」sticky-header
-  const EXIT_THRESHOLD = 40;  // 滾動低於此值才「移除」sticky-header
+  const EXIT_SCROLL_Y = 0;    // scrollY 回到 0 才「移除」sticky-header
   const MOBILE_BREAKPOINT = '(max-width: 991.98px)';
 
   let ticking = false;
@@ -96,7 +100,7 @@
 
     if (!isSticky && scrollY > ENTER_THRESHOLD) {
       document.body.classList.add('sticky-header');
-    } else if (isSticky && scrollY < EXIT_THRESHOLD) {
+    } else if (isSticky && scrollY <= EXIT_SCROLL_Y) {
       document.body.classList.remove('sticky-header');
     }
   }
