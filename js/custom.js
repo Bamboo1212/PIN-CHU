@@ -148,38 +148,8 @@ window.addEventListener('DOMContentLoaded', function() {
 
 /* ==========================================================
 ==index portfolio swiper
+==（由 airtable.js 在資料載入後初始化，此處略過）
 ========================================================== */
-(function() {
-  var swiperContainers = document.querySelectorAll('.portfoiloSwiper');
-  if (swiperContainers.length > 0 && typeof Swiper !== "undefined") {
-    swiperContainers.forEach(function(container){
-      new Swiper(container, {
-        slidesPerView: 1,
-        spaceBetween: 0,
-        centeredSlides: true,
-        loop: true,
-        autoplay: {
-          delay: 2500,
-          disableOnInteraction: false,
-        },
-        navigation: {
-          nextEl: ".swiper-button-next",
-          prevEl: ".swiper-button-prev",
-        },
-        breakpoints: {
-          575: {
-            slidesPerView: 2,
-            spaceBetween: 10,
-          },
-          991: {
-            slidesPerView: 3,
-            spaceBetween: 15,
-          },
-        },
-      });
-    });
-  }
-})();
 
 
 /* ==========================================================

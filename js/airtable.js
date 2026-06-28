@@ -261,8 +261,341 @@ async function loadServiceInfo() {
   }
 }
 
+
+// ── portfolio_list.html 用 ────────────────────────────────
+async function loadPortfolioList() {
+  const cardsEl   = document.getElementById('portfolio-cards');
+  if (!cardsEl) return;
+  const loadingEl = document.getElementById('portfolio-loading');
+  const errorEl   = document.getElementById('portfolio-error');
+  const catListEl = document.getElementById('category-list');
+
+  try {
+    const res = await fetch(
+      `https://api.airtable.com/v0/${BASE_ID}/Portfolios?filterByFormula={Is_Active}=1&sort[0][field]=Sort_Order&sort[0][direction]=asc`,
+      { headers: { Authorization: `Bearer ${AIRTABLE_TOKEN}` } }
+    );
+    if (!res.ok) throw new Error('API 錯誤');
+    const { records } = await res.json();
+
+    loadingEl.style.display = 'none';
+    if (!records || records.length === 0) {
+      errorEl.style.display = 'block';
+      return;
+    }
+
+    // 收集所有分類
+    const categories = [...new Set(records.map(r => r.fields.Category).filter(Boolean))];
+    categories.forEach(cat => {
+      const li = document.createElement('li');
+      li.className = 'py-1 my-2';
+      li.dataset.category = cat;
+      li.innerHTML = `<a href="javascript:void(0)">${cat}</a>`;
+      catListEl.appendChild(li);
+    });
+
+    // 產生卡片
+    function renderCards(filter) {
+      cardsEl.innerHTML = '';
+      const filtered = filter === 'all' ? records : records.filter(r => r.fields.Category === filter);
+      filtered.forEach(record => {
+        const f = record.fields;
+        const slug    = f.Slug || record.id;
+        const title   = f.Title || '';
+        const desc    = f.Short_Description || '';
+        const coverSrc = f.Cover?.[0]?.url || '';
+        const col = document.createElement('div');
+        col.className = 'col-6 col-lg-4';
+        col.innerHTML = `
+          <a href="portfolio_info.html?slug=${encodeURIComponent(slug)}" class="info-portfolio-item d-block position-relative">
+            <div class="img-wrap border position-relative overflow-hidden">
+              ${coverSrc ? `<img src="${coverSrc}" alt="${title}" class="d-block w-100">` : ''}
+            </div>
+            <div class="txt-wrap d-flex flex-column align-items-start justify-content-center border-top-0 border">
+              <div class="p-sm-3">
+                <h3 class="item-title two-row mb-1">${title}</h3>
+                <p class="txt-gray two-row">${desc}</p>
+              </div>
+              <div class="more-btn px-sm-3 py-1 py-sm-2 border-top w-100 text-end">
+                <small class="d-inline-flex gap-1">了解更多<i class="bi-arrow-right"></i></small>
+              </div>
+            </div>
+          </a>`;
+        cardsEl.appendChild(col);
+      });
+    }
+
+    // 讀取網址 ?category 參數，自動篩選
+    const initCategory = getParam('category') || 'all';
+    const initLi = catListEl.querySelector(`li[data-category="${initCategory}"]`) || catListEl.querySelector('li[data-category="all"]');
+    catListEl.querySelectorAll('li').forEach(l => l.classList.remove('active'));
+    if (initLi) initLi.classList.add('active');
+    renderCards(initCategory);
+
+    // 分類篩選點擊
+    catListEl.addEventListener('click', e => {
+      const li = e.target.closest('li[data-category]');
+      if (!li) return;
+      catListEl.querySelectorAll('li').forEach(l => l.classList.remove('active'));
+      li.classList.add('active');
+      renderCards(li.dataset.category);
+    });
+
+  } catch (err) {
+    console.error(err);
+    loadingEl.style.display = 'none';
+    errorEl.style.display = 'block';
+  }
+}
+
+// ── portfolio_info.html 用 ────────────────────────────────
+async function loadPortfolioInfo() {
+  const mainEl = document.getElementById('portfolio-main');
+  if (!mainEl) return;
+  const loadingEl = document.getElementById('portfolio-loading');
+  const errorEl   = document.getElementById('portfolio-error');
+  const slug = getParam('slug');
+
+  try {
+    const res = await fetch(
+      `https://api.airtable.com/v0/${BASE_ID}/Portfolios?filterByFormula=AND({Is_Active}=1,{Slug}="${slug}")&maxRecords=1`,
+      { headers: { Authorization: `Bearer ${AIRTABLE_TOKEN}` } }
+    );
+    if (!res.ok) throw new Error('API 錯誤');
+    const data = await res.json();
+    if (!data.records?.length) throw new Error('找不到作品');
+
+    const f = data.records[0].fields;
+    const title    = f.Title || '';
+    const desc     = f.Description || '';
+    const tools    = f.Tools || '';
+    const history  = f.History || '';
+    const moreInfo = f.More_Info || '';
+    const extUrl   = f.External_URL || '';
+    const category = f.Category || '';
+    const images   = f.Images || [];
+
+    document.title = `${title} | PIN CHU`;
+    const breadcrumbCat = document.getElementById('breadcrumb-category');
+    breadcrumbCat.textContent = category;
+    breadcrumbCat.href = `portfolio_list.html?category=${encodeURIComponent(category)}`;
+    document.getElementById('breadcrumb-title').textContent    = title;
+    document.getElementById('portfolio-title').textContent     = title;
+    document.getElementById('portfolio-desc').textContent      = desc;
+
+    // 外連連結
+    const linkEl = document.getElementById('portfolio-link');
+    if (extUrl) {
+      linkEl.href = extUrl;
+      linkEl.style.display = 'flex';
+    } else {
+      linkEl.style.display = 'none';
+    }
+
+    // 使用工具
+    const toolsWrap = document.getElementById('portfolio-tools-wrap');
+    if (tools) {
+      document.getElementById('portfolio-tools').textContent = tools;
+    } else {
+      toolsWrap.style.display = 'none';
+    }
+
+    // 作品歷程（格式：標題|內容，每行一項）
+    const historyWrap = document.getElementById('portfolio-history-wrap');
+    if (history) {
+      const historyEl = document.getElementById('portfolio-history');
+      historyEl.innerHTML = history.split('\n').filter(l => l.trim()).map(l => {
+        const parts = l.split('|');
+        const label = parts[0].trim();
+        const val   = parts[1] ? parts[1].trim() : '';
+        return `<li class="d-flex flex-wrap align-items-start mb-1"><span>${label}</span><span class="txt-gray ms-1">${val}</span></li>`;
+      }).join('');
+    } else {
+      historyWrap.style.display = 'none';
+    }
+
+    // 更多資訊
+    const moreWrap = document.getElementById('portfolio-more-wrap');
+    if (moreInfo) {
+      document.getElementById('portfolio-more').textContent = moreInfo;
+    } else {
+      moreWrap.style.display = 'none';
+    }
+
+    // 圖片
+    const imagesEl = document.getElementById('portfolio-images');
+    if (images.length > 0) {
+      images.forEach(img => {
+        const el = document.createElement('img');
+        el.src = img.url;
+        el.alt = title;
+        el.className = 'shadow d-block w-100 mb-3';
+        imagesEl.appendChild(el);
+      });
+    }
+
+    loadingEl.style.display = 'none';
+    mainEl.style.display = 'block';
+
+  } catch (err) {
+    console.error(err);
+    loadingEl.style.display = 'none';
+    errorEl.style.display = 'block';
+  }
+}
+
+
+// ── index.html 用：網站設計 & 平面設計區塊 ───────────────
+async function loadIndexPortfolios() {
+  const websiteEl = document.getElementById('index-website-cards');
+  const graphicEl = document.querySelector('.portfoiloSwiper .swiper-wrapper');
+  if (!websiteEl && !graphicEl) return;
+
+  try {
+    const res = await fetch(
+      `https://api.airtable.com/v0/${BASE_ID}/Portfolios?filterByFormula={Is_Active}=1&sort[0][field]=Sort_Order&sort[0][direction]=asc`,
+      { headers: { Authorization: `Bearer ${AIRTABLE_TOKEN}` } }
+    );
+    if (!res.ok) return;
+    const { records } = await res.json();
+
+    // 網站設計：前 6 筆
+    if (websiteEl) {
+      const websiteRecords = records.filter(r => r.fields.Category === '網站設計').slice(0, 6);
+      websiteRecords.forEach(record => {
+        const f = record.fields;
+        const slug    = f.Slug || record.id;
+        const title   = f.Title || '';
+        const desc    = f.Short_Description || '';
+        const coverSrc = f.Cover?.[0]?.url || '';
+        const div = document.createElement('div');
+        div.innerHTML = `
+          <a href="portfolio_info.html?slug=${encodeURIComponent(slug)}" class="portfolio-item position-relative">
+            ${coverSrc ? `<img src="${coverSrc}" alt="${title}" class="d-block w-100">` : ''}
+            <div class="portfolio-overlay d-flex flex-column align-items-start justify-content-center z-1">
+              <h3 class="item-title two-row mb-1 mb-lg-2">${title}</h3>
+              <p class="txt two-row mb-2 mb-lg-3">${desc}</p>
+              <small class="d-inline-flex gap-2 more-btn position-relative align-self-end">了解更多<i class="bi-arrow-right"></i></small>
+            </div>
+          </a>`;
+        websiteEl.appendChild(div);
+      });
+    }
+
+    // 平面設計：前 6 筆，swiper slides
+    if (graphicEl) {
+      graphicEl.innerHTML = '';
+      const graphicRecords = records.filter(r => r.fields.Category === '平面設計').slice(0, 6);
+      graphicRecords.forEach(record => {
+        const f = record.fields;
+        const slug    = f.Slug || record.id;
+        const title   = f.Title || '';
+        const desc    = f.Short_Description || '';
+        const coverSrc = f.Cover?.[0]?.url || '';
+        const slide = document.createElement('div');
+        slide.className = 'swiper-slide';
+        slide.innerHTML = `
+          <a href="portfolio_info.html?slug=${encodeURIComponent(slug)}" class="portfolio-item position-relative">
+            ${coverSrc ? `<img src="${coverSrc}" alt="${title}" class="d-block">` : ''}
+            <div class="portfolio-overlay d-flex flex-column align-items-center align-items-lg-start justify-content-center z-1">
+              <h3 class="item-title two-row mb-1 mb-lg-2">${title}</h3>
+              <p class="txt two-row mb-2 mb-lg-3">${desc}</p>
+              <small class="d-inline-flex gap-2 more-btn position-relative align-self-lg-end">了解更多<i class="bi-arrow-right"></i></small>
+            </div>
+          </a>`;
+        graphicEl.appendChild(slide);
+      });
+    }
+
+    // 資料載入完成後再初始化 Swiper
+    if (graphicEl && typeof Swiper !== 'undefined') {
+      const container = document.querySelector('.portfoiloSwiper');
+      if (container) {
+        new Swiper(container, {
+          slidesPerView: 1,
+          spaceBetween: 0,
+          centeredSlides: true,
+          loop: true,
+          autoplay: {
+            delay: 2500,
+            disableOnInteraction: false,
+          },
+          navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+          },
+          breakpoints: {
+            575: { slidesPerView: 2, spaceBetween: 10 },
+            991: { slidesPerView: 3, spaceBetween: 15 },
+          },
+        });
+      }
+    }
+
+  } catch (err) {
+    console.error('Index portfolios error:', err);
+  }
+}
+
+// 所有頁面都執行：填經典案例下拉
+async function loadPortfolioNavDropdown() {
+  const dropdownEl = document.getElementById('nav-portfolio-dropdown');
+  if (!dropdownEl) return;
+
+  try {
+    const res = await fetch(
+      `https://api.airtable.com/v0/${BASE_ID}/Portfolios?filterByFormula={Is_Active}=1`,
+      { headers: { Authorization: `Bearer ${AIRTABLE_TOKEN}` } }
+    );
+    if (!res.ok) return;
+    const data = await res.json();
+    const categories = [...new Set((data.records || []).map(r => r.fields.Category).filter(Boolean))];
+
+    categories.forEach(cat => {
+      const li = document.createElement('li');
+      li.innerHTML = `<a class="dropdown-item" href="portfolio_list.html?category=${encodeURIComponent(cat)}">${cat}</a>`;
+      dropdownEl.appendChild(li);
+    });
+  } catch (err) {
+    console.error('Portfolio nav error:', err);
+  }
+}
+
+// 所有頁面都執行：填導覽列下拉
+async function loadNavDropdown() {
+  const dropdownEl = document.getElementById('nav-service-dropdown');
+  if (!dropdownEl) return;
+  // service_list 和 service_info 自己的函式會填，不重複
+  if (document.getElementById('service-cards')) return;
+  if (document.getElementById('main-content')) return;
+
+  try {
+    const res = await fetch(
+      `https://api.airtable.com/v0/${BASE_ID}/Services?filterByFormula={Is_Active}=1`,
+      { headers: { Authorization: `Bearer ${AIRTABLE_TOKEN}` } }
+    );
+    if (!res.ok) return;
+    const data = await res.json();
+    const records = (data.records || []).reverse();
+    records.forEach(r => {
+      const slug  = r.fields.Slug || r.id;
+      const title = r.fields.Title || '';
+      const li = document.createElement('li');
+      li.innerHTML = `<a class="dropdown-item" href="service_info.html?slug=${encodeURIComponent(slug)}">${title}</a>`;
+      dropdownEl.appendChild(li);
+    });
+  } catch (err) {
+    console.error('Nav dropdown error:', err);
+  }
+}
+
 // 自動判斷在哪一頁並執行
 document.addEventListener('DOMContentLoaded', () => {
-  if (document.getElementById('service-cards')) loadServices();
-  if (document.getElementById('main-content'))  loadServiceInfo();
+  loadNavDropdown();
+  loadPortfolioNavDropdown();
+  if (document.getElementById('service-cards'))   loadServices();
+  if (document.getElementById('main-content'))     loadServiceInfo();
+  if (document.getElementById('portfolio-cards'))  loadPortfolioList();
+  if (document.getElementById('portfolio-main'))   loadPortfolioInfo();
+  if (document.getElementById('index-website-cards') || document.querySelector('.portfoiloSwiper')) loadIndexPortfolios();
 });

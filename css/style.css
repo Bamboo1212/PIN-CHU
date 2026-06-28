@@ -563,6 +563,7 @@ header.sticky-top {
 }
 
 .portfolio-info-section .golink-btn {
+  display: flex;
   padding: 8px;
   background-color: var(--theme);
   color: var(--white);

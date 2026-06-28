@@ -13,14 +13,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="author" content="https://www.bondlink.com.tw/">
   <meta name="description" content="用負擔得起的預算，打造設計師操刀的品牌高質感門面">
-  <link rel="canonical" href="網站網址">
+  <link rel="canonical" href="https://bamboo1212.github.io/PIN-CHU/portfolio_info.html">
 
 	<!-- og -->
   <meta property="og:title" content="PIN CHU">
   <meta property="og:description" content="用負擔得起的預算，打造設計師操刀的品牌高質感門面">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="PIN CHU">
-  <meta property="og:url" content="網站網址">
+  <meta property="og:url" content="https://bamboo1212.github.io/PIN-CHU/portfolio_info.html">
   <meta property="og:image" content="img/og_1200x630.png">
   <meta property="og:image:type" content="image/png">
   <meta property="og:image:width" content="1200">
@@ -75,10 +75,7 @@
                   <i class="bi bi-caret-down-fill"></i>
                 </button>
               </div>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="portfolio_info.html">網站設計</a></li>
-                <li><a class="dropdown-item" href="portfolio_info.html">平面設計</a></li>
-              </ul>
+              <ul class="dropdown-menu" id="nav-portfolio-dropdown"></ul>
             </li>
             <li class="nav-item dropdown">
               <div class="nav-link-row">
@@ -87,11 +84,7 @@
                   <i class="bi bi-caret-down-fill"></i>
                 </button>
               </div>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="service_info.html">形象網站 · UIUX設計</a></li>
-                <li><a class="dropdown-item" href="service_info.html">前後端工程師、團隊開發協作</a></li>
-                <li><a class="dropdown-item" href="service_info.html">品牌視覺與平面設計</a></li>
-              </ul>
+              <ul class="dropdown-menu" id="nav-service-dropdown"></ul>
             </li>
             <li class="nav-item">
               <a class="nav-link" aria-current="page" href="faq.html">常見問題</a>
@@ -124,10 +117,10 @@
           <a href="portfolio_list.html">經典案例</a>
         </li>
         <li>
-          <a href="portfolio_list.html">網站設計</a>
+          <a href="portfolio_list.html" id="breadcrumb-category"></a>
         </li>
         <li>
-          <h2 class="fs-normal fw-normal mb-0">Joy accessory</h2>
+          <h2 class="fs-normal fw-normal mb-0" id="breadcrumb-title"></h2>
         </li>
       </ul>
     </div>
@@ -135,37 +128,35 @@
 
   <main class="pt-0">
 
-    <div class="section portfolio-info-section position-relative">
-      <div class="container mt-md-5">
-        <div class="row">
-          <div class="col-md-7">
-            <div class="pe-md-4 pe-lg-5">
-              <img src="img/website/pd_1200_1.png" alt="joy accessory" class="shadow">
+    <div id="portfolio-loading" class="section text-center"><p class="txt-gray">載入中…</p></div>
+    <div id="portfolio-error" class="section text-center" style="display:none;"><p class="txt-gray">找不到此作品，請返回<a href="portfolio_list.html">案例列表</a>。</p></div>
+
+    <div id="portfolio-main" style="display:none;">
+      <div class="section portfolio-info-section position-relative">
+        <div class="container mt-md-5">
+          <div class="row">
+            <div class="col-md-7">
+              <div class="pe-md-4 pe-lg-5" id="portfolio-images"></div>
             </div>
-          </div>
-          <div class="col-md-5 mt-4 mt-md-0">
-            <div class="txt-wrap">
-              <div class="border-bottom mb-4 d-flex align-items-end justify-content-between">
-                <h1 class="info-title mb-2 me-4">Joy accessory</h1>
-                <a href="https://joyaccessory.github.io/joyaccessory/index.html" target="_blank" class="golink-btn d-flex align-items-center justify-content-center"><i class="bi-link-45deg lh-1"></i></a>
-              </div>
-              <p>飾品品牌電子商務網站，整體風格清新細膩，與品牌輕盈優雅的產品調性一脈相承。網站功能規劃完整，涵蓋商品列表、產品詳情、部落格、優惠券、購物車結帳至個人帳戶管理，提供用戶流暢的一站式購物體驗。</p>
-              <div class="mt-5">
-                <h4 class="sub-title position-relative mb-0">使用工具</h4>
-                <ul class="list-unstyled d-flex flex-wrap mb-0">
-                  <li>Figma</li>、
-                  <li>HTML</li>、
-                  <li>CSS</li>、
-                  <li>Javascript</li>、
-                  <li>Github</li>
-                </ul>
-              </div>
-              <div class="mt-5">
-                <h4 class="sub-title position-relative mb-0">作品歷程</h4>
-                <ul class="list-unstyled d-flex flex-wrap mb-0">
-                  <li class="d-flex flex-wrap align-items-start mb-1"><span>製作時間：</span><span class="txt-gray">任職於「邦立資訊有限公司」期間參與製作</span></li>
-                  <li class="d-flex flex-wrap align-items-start"><span>負責項目：</span><span class="txt-gray">UI設計、RWD切版</span></li>
-                </ul>
+            <div class="col-md-5 mt-4 mt-md-0">
+              <div class="txt-wrap">
+                <div class="border-bottom mb-4 d-flex align-items-end justify-content-between">
+                  <h1 class="info-title mb-2 me-4" id="portfolio-title"></h1>
+                  <a id="portfolio-link" href="#" target="_blank" class="golink-btn align-items-center justify-content-center" style="display:none;"><i class="bi-link-45deg lh-1"></i></a>
+                </div>
+                <p id="portfolio-desc"></p>
+                <div class="mt-5" id="portfolio-tools-wrap">
+                  <h4 class="sub-title position-relative mb-0">使用工具</h4>
+                  <p id="portfolio-tools" class="mb-0"></p>
+                </div>
+                <div class="mt-5" id="portfolio-history-wrap">
+                  <h4 class="sub-title position-relative mb-0">作品歷程</h4>
+                  <ul id="portfolio-history" class="list-unstyled mb-0"></ul>
+                </div>
+                <div class="mt-5" id="portfolio-more-wrap">
+                  <h4 class="sub-title position-relative mb-0">更多資訊</h4>
+                  <p id="portfolio-more" class="mb-0"></p>
+                </div>
               </div>
             </div>
           </div>
@@ -270,6 +261,7 @@
   <script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>
 	<script src="js/header.js"></script>
 	<script src="js/custom.js"></script>
+  <script src="js/airtable.js"></script>
 </body>
 
 </html>
