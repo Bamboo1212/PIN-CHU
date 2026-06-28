@@ -194,7 +194,7 @@ async function loadServiceInfo() {
       { headers: { Authorization: `Bearer ${AIRTABLE_TOKEN}` } }
     );
     const allData = await allRes.json();
-    const allServices = allData.records || [];
+    const allServices = (allData.records || []).reverse();
 
     // 3. 所有方案，前端篩選
     const plansRes = await fetch(
@@ -506,6 +506,9 @@ async function loadIndexPortfolios() {
         graphicEl.appendChild(slide);
       });
     }
+
+    // AOS 重新掃描動態載入的元素
+    if (typeof AOS !== 'undefined') AOS.refresh();
 
     // 資料載入完成後再初始化 Swiper
     if (graphicEl && typeof Swiper !== 'undefined') {

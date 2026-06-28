@@ -32,6 +32,7 @@
   <meta name="format-detection" content="telephone=no">
 
 	<!-- css -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css" />
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/bootstrap-icons.min.css">
@@ -173,10 +174,10 @@
     <div class="section index-intro-section">
       <div class="cotainer-fluid px-0 position-relative">
         <div class="intro-img-wrap">
-          <img src="img/intro_1200x800.jpg" alt="PIN CHU" class="w-100">
+          <img src="img/intro_1200x800.jpg" alt="PIN CHU" class="w-100" data-aos="fade-right" data-aos-duration="1000">
         </div>
         <div class="container intro-txt-wrap text-end mt-4 mt-lg-0">
-          <div class="d-inline-flex flex-column align-items-center align-items-sm-start text-start">
+          <div class="d-inline-flex flex-column align-items-center align-items-sm-start text-start" data-aos="fade-right" data-aos-duration="1000">
             <div>
               <h2 class="section-title side mb-3 mb-lg-4">
                 <span class="en">About Me</span>
@@ -232,7 +233,7 @@
             <span class="md">網站設計</span>
           </span>
         </h2>
-        <div class="row row-cols-2 row-cols-lg-3 gy-4" id="index-website-cards"></div>
+        <div class="row row-cols-2 row-cols-lg-3 gy-4" id="index-website-cards" data-aos="fade-in" data-aos-duration="1000"></div>
         <div class="text-center mt-5">
           <a href="portfolio_list.html?category=%E7%B6%B2%E7%AB%99%E8%A8%AD%E8%A8%88" class="btn-base">
             <span>更多案例</span>
@@ -252,7 +253,7 @@
             <span class="md">平面設計</span>
           </span>
         </h2>
-        <div class="position-relative">
+        <div class="position-relative" data-aos="fade-in" data-aos-duration="1000">
           <div class="swiper portfoiloSwiper">
             <div class="swiper-wrapper">
               <!-- 由 JS 動態產生 -->
@@ -285,7 +286,7 @@
           </span>
         </h2>
       </div>
-      <div class="container-fluid px-0">
+      <div class="container-fluid px-0" data-aos="fade-in" data-aos-duration="1000" data-aos-offset="-300">
         <div class="d-flex flex-column flex-lg-row position-relative">
           <div class="service-img-wrap">
             <img src="img/service.png" alt="services" class="w-100 h-100 object-fit-cover">
@@ -316,7 +317,7 @@
                       </li>
                     </ul>
                     <div class="text-end">
-                      <a href="http://127.0.0.1:5500/service_info.html?slug=website-design" class="btn-base">
+                      <a href="https://bamboo1212.github.io/PIN-CHU/service_info.html?slug=website-design" class="btn-base">
                         <span>了解更多</span>
                         <i class="bi-arrow-right fs-normal"></i>
                       </a>
@@ -352,7 +353,7 @@
                       </li>
                     </ul>
                     <div class="text-end">
-                      <a href="http://127.0.0.1:5500/service_info.html?slug=website-design" class="btn-base">
+                      <a href="https://bamboo1212.github.io/PIN-CHU/service_info.html?slug=dev-collaboration" class="btn-base">
                         <span>了解更多</span>
                         <i class="bi-arrow-right fs-normal"></i>
                       </a>
@@ -388,7 +389,7 @@
                       </li>
                     </ul>
                     <div class="text-end">
-                      <a href="http://127.0.0.1:5500/service_info.html?slug=website-design" class="btn-base">
+                      <a href="https://bamboo1212.github.io/PIN-CHU/service_info.html?slug=brand-design" class="btn-base">
                         <span>了解更多</span>
                         <i class="bi-arrow-right fs-normal"></i>
                       </a>
@@ -416,7 +417,7 @@
             </h2>
             <p>想聊聊合作或有任何問題嗎？<br>歡迎隨時透過以下方式聯繫，我會盡快回覆！</p>
           </div>
-          <div class="col-12 col-sm-6 col-lg-4 mb-4 mb-md-0">
+          <div class="col-12 col-sm-6 col-lg-4 mb-4 mb-md-0" data-aos="fade-up" data-aos-duration="1000" data-aos-offset="-300">
             <a href="mailto:newpad307@gmail.com" class="contact-item d-block text-center py-4 py-md-5">
               <i class="bi-envelope-fill d-block color lh-1 mb-1"></i>
               <h3 class="item-title mb-2 mb-md-4">信箱</h3>
@@ -430,7 +431,7 @@
               <p>newpad307@</p>
             </a>
           </div> -->
-          <div class="col-12 col-sm-6 col-lg-4">
+          <div class="col-12 col-sm-6 col-lg-4" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="300" data-aos-offset="-300">
             <a href="contact.html" class="contact-item d-block text-center py-4 py-md-5">
               <i class="bi-pencil-square d-block color lh-1 mb-1"></i>
               <h3 class="item-title mb-2 mb-md-4">免費諮詢</h3>
@@ -535,10 +536,17 @@
 
   <!-- js -->
 	<script src="js/bootstrap.bundle.min.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>
 	<script src="js/header.js"></script>
 	<script src="js/custom.js"></script>
   <script src="js/airtable.js"></script>
+  <script>
+    AOS.init({
+      offset: 80,
+      once: false,
+    });
+  </script>
 </body>
 
 </html>

@@ -32,6 +32,7 @@
   <meta name="format-detection" content="telephone=no">
 
 	<!-- css -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css" />
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/bootstrap-icons.min.css">
@@ -135,7 +136,7 @@
           <p class="txt-gray">資料載入失敗，請稍後再試。</p>
         </div>
         <!-- 卡片區：由 JS 動態產生 -->
-        <div class="row gx-xl-5 gy-4" id="service-cards">
+        <div class="row gx-xl-5 gy-4" id="service-cards" data-aos="fade-left" data-aos-duration="1000">
         </div>
       </div>
     </div>
@@ -229,9 +230,16 @@
 
   <!-- js -->
 	<script src="js/bootstrap.bundle.min.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>
 	<script src="js/header.js"></script>
 	<script src="js/custom.js"></script>
   <script src="js/airtable.js"></script>
+  <script>
+    AOS.init({
+      offset: 80,
+      once: false,
+    });
+  </script>
 </body>
 </html>
