@@ -87,10 +87,8 @@
                   <i class="bi bi-caret-down-fill"></i>
                 </button>
               </div>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="service_info.html">形象網站 · UIUX設計</a></li>
-                <li><a class="dropdown-item" href="service_info.html">前後端工程師、團隊開發協作</a></li>
-                <li><a class="dropdown-item" href="service_info.html">品牌視覺與平面設計</a></li>
+              <!-- 導覽列下拉選單：由 JS 動態產生 -->
+              <ul class="dropdown-menu" id="nav-service-dropdown">
               </ul>
             </li>
             <li class="nav-item">
@@ -131,34 +129,16 @@
 
     <div class="section service-list-section position-relative">
       <div class="container">
-        <div class="row gx-xl-5 gy-4">
-          <div class="col-md-6 col-lg-4 d-flex">
-            <a href="service_info.html" class="do-item d-flex flex-column position-relative overflow-hidden h-100 shadow w-100 align-items-stretch" style="min-height:100%;height:100%;">
-              <div class="num">01</div>
-              <img src="img/doicon/doicon_512x512_7.png" alt="減半溝通成本" width="80" class="d-block mb-3">
-              <h3 class="item-title color">形象網站 · UIUX設計</h3>
-              <p class="txt-gray two-row">需要一頁式銷售頁、活動宣傳頁、輕量多頁品牌官網的微型創業者、中小企業或自備開發團隊的品牌主。本服務專注於一般網頁頁面（無複雜後台與會員系統）的視覺設計與建立。</p>
-              <small class="d-flex gap-2 more-btn position-relative justify-content-end">了解更多<i class="bi-arrow-right"></i></small>
-            </a>
-          </div>
-          <div class="col-md-6 col-lg-4 d-flex">
-            <a href="service_info.html" class="do-item d-flex flex-column position-relative overflow-hidden h-100 shadow w-100 align-items-stretch" style="min-height:100%;height:100%;">
-              <div class="num">02</div>
-              <img src="img/doicon/doicon_512x512_8.png" alt="減半溝通成本" width="80" class="d-block mb-3">
-              <h3 class="item-title color">前後端工程師、團隊開發協作</h3>
-              <p class="txt-gray two-row">擅長後端邏輯、API 串接、系統開發，或是正在開發 Web App 產品，卻缺少 UI/UX 規劃與前端切版戰力的工程師戰友與新創團隊。</p>
-              <small class="d-flex gap-2 more-btn position-relative justify-content-end">了解更多<i class="bi-arrow-right"></i></small>
-            </a>
-          </div>
-          <div class="col-md-6 col-lg-4 d-flex">
-            <a href="service_info.html" class="do-item d-flex flex-column position-relative overflow-hidden h-100 shadow w-100 align-items-stretch" style="min-height:100%;height:100%;">
-              <div class="num">03</div>
-              <img src="img/doicon/doicon_512x512_9.png" alt="減半溝通成本" width="80" class="d-block mb-3">
-              <h3 class="item-title color">品牌視覺與平面設計</h3>
-              <p class="txt-gray two-row">需要高質感商業宣傳物料，且自備文案與圖片素材的微型品牌或診所。平面設計採「高門檻、不費時、不包發印」的獨立合作模式，專注於視覺排版的極致呈現。</p>
-              <small class="d-flex gap-2 more-btn position-relative justify-content-end">了解更多<i class="bi-arrow-right"></i></small>
-            </a>
-          </div>
+        <!-- 讀取中狀態 -->
+        <div id="loading-state" class="text-center py-5">
+          <p class="txt-gray">載入中…</p>
+        </div>
+        <!-- 錯誤狀態 -->
+        <div id="error-state" class="text-center py-5" style="display:none;">
+          <p class="txt-gray">資料載入失敗，請稍後再試。</p>
+        </div>
+        <!-- 卡片區：由 JS 動態產生 -->
+        <div class="row gx-xl-5 gy-4" id="service-cards">
         </div>
       </div>
     </div>
@@ -177,11 +157,6 @@
                   <i class="bi-envelope-fill me-2"></i>newpad307@gmail.com
                 </a>
               </li>
-              <!-- <li class="mb-3">
-                <a href="#" target="_blank">
-                  <i class="bi-line me-2"></i>newpad307@
-                </a>
-              </li> -->
               <li>
                 <a href="contact.html">
                   <i class="bi-pencil-square me-2"></i>免費諮詢表單
@@ -260,11 +235,6 @@
   <script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>
 	<script src="js/header.js"></script>
 	<script src="js/custom.js"></script>
+  <script src="js/airtable.js"></script>
 </body>
-
-</html>
-
-
-</body>
-
 </html>
