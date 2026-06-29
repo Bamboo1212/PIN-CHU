@@ -55,7 +55,7 @@ async function loadServices() {
            class="do-item d-flex flex-column position-relative overflow-hidden h-100 shadow w-100 align-items-stretch"
            style="min-height:100%;height:100%;">
           <div class="num">${num}</div>
-          ${iconSrc ? `<img src="${iconSrc}" alt="${title}" width="80" class="d-block mb-3">` : ''}
+          ${iconSrc ? `<img src="${iconSrc}" alt="${title}" width="80" class="d-block mb-3" loading="lazy">` : ''}
           <h3 class="item-title color">${title}</h3>
           <p class="txt-gray two-row">${desc}</p>
           <small class="d-flex gap-2 more-btn position-relative justify-content-end">了解更多<i class="bi-arrow-right"></i></small>
@@ -309,7 +309,7 @@ async function loadPortfolioList() {
         col.innerHTML = `
           <a href="portfolio_info.html?slug=${encodeURIComponent(slug)}" class="info-portfolio-item d-block position-relative">
             <div class="img-wrap border position-relative overflow-hidden">
-              ${coverSrc ? `<img src="${coverSrc}" alt="${title}" class="d-block w-100">` : ''}
+              ${coverSrc ? `<img src="${coverSrc}" alt="${title}" class="d-block w-100" loading="lazy">` : ''}
             </div>
             <div class="txt-wrap d-flex flex-column align-items-start justify-content-center border-top-0 border">
               <div class="p-sm-3">
@@ -430,6 +430,7 @@ async function loadPortfolioInfo() {
         el.src = img.url;
         el.alt = title;
         el.className = 'shadow d-block w-100 mb-3';
+        el.loading = 'lazy';
         imagesEl.appendChild(el);
       });
     }
@@ -496,7 +497,7 @@ async function loadIndexPortfolios() {
         slide.className = 'swiper-slide';
         slide.innerHTML = `
           <a href="portfolio_info.html?slug=${encodeURIComponent(slug)}" class="portfolio-item position-relative">
-            ${coverSrc ? `<img src="${coverSrc}" alt="${title}" class="d-block">` : ''}
+            ${coverSrc ? `<img src="${coverSrc}" alt="${title}" class="d-block" loading="lazy">` : ''}
             <div class="portfolio-overlay d-flex flex-column align-items-center align-items-lg-start justify-content-center z-1">
               <h3 class="item-title two-row mb-1 mb-lg-2">${title}</h3>
               <p class="txt two-row mb-2 mb-lg-3">${desc}</p>
