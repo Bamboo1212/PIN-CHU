@@ -297,7 +297,7 @@ async function loadPortfolioList() {
     // 產生卡片
     function renderCards(filter) {
       cardsEl.innerHTML = '';
-      const filtered = filter === 'all' ? records : records.filter(r => r.fields.Category === filter);
+      const filtered = records.filter(r => r.fields.Category === filter);
       filtered.forEach(record => {
         const f = record.fields;
         const slug    = f.Slug || record.id;
@@ -325,9 +325,9 @@ async function loadPortfolioList() {
       });
     }
 
-    // 讀取網址 ?category 參數，自動篩選
-    const initCategory = getParam('category') || 'all';
-    const initLi = catListEl.querySelector(`li[data-category="${initCategory}"]`) || catListEl.querySelector('li[data-category="all"]');
+    // 讀取網址 ?category 參數，自動篩選；無參數時預設第一個分類
+    const initCategory = getParam('category') || categories[0] || '';
+    const initLi = catListEl.querySelector(`li[data-category="${initCategory}"]`) || catListEl.querySelector('li[data-category]');
     catListEl.querySelectorAll('li').forEach(l => l.classList.remove('active'));
     if (initLi) initLi.classList.add('active');
     renderCards(initCategory);
