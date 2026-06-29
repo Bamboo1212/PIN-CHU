@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://bamboo1212.github.io/PIN-CHU/sitemap.xml
